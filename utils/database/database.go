@@ -2,20 +2,24 @@ package database
 
 import (
 	"fmt"
+	"log"
 	"test/configs"
 
-	"github.com/sirupsen/logrus"
-	"gorm.io/driver/postgres"
+	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
 
-func InitDB(config configs.ProgramConfig) *gorm.DB {
-	var dsn = fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%d sslmode=disable", config.DBHost, config.DBUser, config.DBPass, config.DBName, config.DBPort)
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	
+func InitDB(c configs.ProgramConfig) *gorm.DB {
+	connStr := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		c.DBUser,
+		c.DBPass,
+		c.DBHost,
+		c.DBPort,
+		c.DBName)
+	db, err := gorm.Open(mysql.Open(connStr), &gorm.Config{})
 	if err != nil {
-		logrus.Error("model : cannot connect to database, ", err.Error())
-		return nil
+		log.Fatal("cannot connect database, ", err.Error())
 	}
+
 	return db
 }
