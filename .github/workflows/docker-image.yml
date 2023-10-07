@@ -33,11 +33,11 @@ jobs:
         uses: appleboy/ssh-action@v0.1.9
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}/imgkmb:didagols
+          username: ${{ secrets.USERNAME }}/didagols:latest
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
             docker stop ${{ secrets.CNAME }}
             docker rm ${{ secrets.CNAME }}
-            docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/imgkmb:didagols
-            docker run --name ${{ secrets.CNAME }} -p 8000:8000 -d -e DBHOST=${{secrets.DBHOST}} -e DBPORT=${{secrets.DBPORT}} -e DBUSER=${{secrets.DBUSER}} -e DBNAME=${{ secrets.DBNAME }} -e DBPASS= -e SECRET=${{ secrets.SECRET }} -e REFSECRET=${{ secrets.REFSECRET }} -e SERVER=${{ secrets.SERVER }} ${{ secrets.DOCKERHUB_USERNAME }}/imgkmb:didagols
+            docker rmi ${{ secrets.DOCKERHUB_USERNAME }}/didagols
+            docker run --name ${{ secrets.CNAME }} -p 8000:8000 -d -e DBHOST=${{secrets.DBHOST}} -e DBPORT=${{secrets.DBPORT}} -e DBUSER=${{secrets.DBUSER}} -e DBNAME=${{ secrets.DBNAME }} -e DBPASS= -e SECRET=${{ secrets.SECRET }} -e REFSECRET=${{ secrets.REFSECRET }} -e SERVER=${{ secrets.SERVER }} ${{ secrets.DOCKERHUB_USERNAME }}/didagols
